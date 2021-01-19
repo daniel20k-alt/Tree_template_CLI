@@ -33,6 +33,13 @@ struct Node<Value> {
         self.value = value
         self.children = children
     }
+
+    //calculating the total size of the tree
+    
+    var count: Int {
+        1 + children.reduce(0) { $0 + $1.count }
+    }
+
 }
 
 
@@ -59,3 +66,8 @@ print(andrei)
 print(andrei == bianca)
 print(andrei != bianca)
 print(andrei == andrei)
+
+
+print(root.count)
+print(andrei.count)
+print(bianca.count)
