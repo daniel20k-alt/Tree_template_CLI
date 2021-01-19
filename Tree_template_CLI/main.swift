@@ -9,6 +9,10 @@ import Foundation
 print("Hello, World!")
 
 
+extension Node: Equatable where Value: Equatable { }
+extension Node: Hashable where Value: Hashable { }
+extension Node: Codable where Value: Codable { }
+
 struct Node<Value> {
     var value: Value
    private (set) var children: [Node]
@@ -50,3 +54,8 @@ root.add(child: bianca)
 
 print(root)
 print(andrei)
+
+
+print(andrei == bianca)
+print(andrei != bianca)
+print(andrei == andrei)
