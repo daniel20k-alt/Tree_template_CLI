@@ -40,8 +40,25 @@ struct Node<Value> {
         1 + children.reduce(0) { $0 + $1.count }
     }
 
+
 }
 
+extension Node where Value: Equatable {
+    func find (_ value: Value) -> Node? {
+        if self.value == value {
+            return self
+        }
+        
+        for child in children {
+            if let match = child.find(value) {
+                return match
+            }
+        }
+        
+        return nil
+        
+    }
+}
 
 //creating nodes and model them
 
@@ -71,3 +88,8 @@ print(andrei == andrei)
 print(root.count)
 print(andrei.count)
 print(bianca.count)
+
+
+if let bianca = root.find("Bianca") {
+    print(bianca.count)
+}
