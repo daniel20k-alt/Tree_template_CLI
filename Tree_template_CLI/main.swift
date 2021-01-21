@@ -9,16 +9,30 @@ import Foundation
 print("Hello, World!")
 
 
-extension Node: Equatable where Value: Equatable { }
-extension Node: Hashable where Value: Hashable { }
+//extension Node: Equatable where Value: Equatable { }
+//extension Node: Hashable where Value: Hashable { }
 extension Node: Codable where Value: Codable { }
 
-struct Node<Value> {
+extension Node: Equatable where Value: Equatable {
+    static func ==(lhs: Node, rhs: Node) -> Bool {
+        lhs.value == rhs.value && lhs.children == rhs.children
+    }
+}
+
+extension Node: Hashable where Value: Hashable {
+    func  hash(into hasher: inout Hasher)  {
+        hasher.combine(value)
+        hasher.combine(children)
+        
+    }
+}
+
+final class Node<Value> {
     var value: Value
-   private (set) var children: [Node]
+    private (set) var children: [Node]
     
     
-    mutating func add(child: Node) {
+  func add(child: Node) {
         children.append(child)
     }
     
@@ -48,15 +62,15 @@ extension Node where Value: Equatable {
         if self.value == value {
             return self
         }
-        
+
         for child in children {
             if let match = child.find(value) {
                 return match
             }
         }
-        
+
         return nil
-        
+
     }
 }
 
