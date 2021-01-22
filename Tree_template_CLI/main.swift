@@ -55,6 +55,17 @@ final class Node<Value> {
     }
 
 
+    @_functionBuilder
+    struct NodeBuilder {
+        static func buildBlock<Value>(_ children: Node<Value>...) -> [Node<Value>] {
+            children
+        }
+    }
+
+    init(_ value: Value, @NodeBuilder builder: () -> [Node]) {
+        self.value = value
+        self.children = builder()
+    }
 }
 
 extension Node where Value: Equatable {
@@ -73,6 +84,7 @@ extension Node where Value: Equatable {
 
     }
 }
+
 
 //creating nodes and model them
 
@@ -106,4 +118,16 @@ print(bianca.count)
 
 if let bianca = root.find("Bianca") {
     print(bianca.count)
+}
+
+
+let jonnie = Node("Jonnie") {
+    Node("Alice") {
+        Node("Jr. Jonnie")
+        Node("Alisson")
+    }
+    
+    Node("Barbara") {
+        Node("Don")
+    }
 }
